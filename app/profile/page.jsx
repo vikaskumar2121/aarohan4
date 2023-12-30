@@ -4,6 +4,7 @@ import { UserAuth } from "../context/AuthContext";
 import Spinner from "../components/Spinner";
 import ImageUpload from "../components/imagecomponent";
 import Testcomp from "../components/testcomponent";
+import FirestoreUpload from "../components/FirestoreUpload";
 
 const page = () => {
   const { user } = UserAuth();
@@ -48,10 +49,11 @@ const handleJsonUpdate = (data) => {
           Welcome, {user.displayName} - you are logged in to the profile page -
           a protected route.
         </p>
-        <ImageUpload onUpdateState={handleImageURLUpdate} />
-        <> {JSON.stringify(imageUrls)}</>
-        <Testcomp imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} />
-        <> {JSON.stringify(uploadableFirestoreData)}</>
+        <ImageUpload onUpdateState={handleImageURLUpdate} /> <br />
+        <> {JSON.stringify(imageUrls)}</> <br />
+        <Testcomp imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /> <br />
+        <> {JSON.stringify(uploadableFirestoreData)}</> <br />
+        <FirestoreUpload dataToUpload={uploadableFirestoreData} collectionName="yourCollectionName" />   <br />
         </>
       ) : (
         <p>You must be logged in to view this page - protected route.</p>
