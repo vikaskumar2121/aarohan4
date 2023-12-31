@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import Spinner from "../components/Spinner";
 import ImageUpload from "../components/imagecomponent";
-import Testcomp from "../components/testcomponent";
+
 import FirestoreUpload from "../components/FirestoreUpload";
 import FetchDropdownData from "../components/FetchDropdownData";
 

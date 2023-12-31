@@ -42,7 +42,12 @@ const Navbar = () => {
 
         {!user ? null : (
           <li className="p-2 cursor-pointer">
-            <Link href="/profile">Profile</Link>
+            <Link href="/addQuestions">Add Questions</Link>
+          </li>
+        )}
+        {!user ? null : (
+          <li className="p-2 cursor-pointer">
+            <Link href="/editMetaData"> Edit options </Link>
           </li>
         )}
       </ul>

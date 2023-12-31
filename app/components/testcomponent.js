@@ -2,7 +2,7 @@
 import  { useState , useEffect} from 'react';
 import React, { useReducer } from 'react';
 import Image from 'next/image'
-import { dropdownData } from './dropdowndata'; 
+//import { dropdownData } from './dropdowndata'; 
 
 const initialState = {
     selectedSubject: '',
@@ -10,19 +10,7 @@ const initialState = {
     selectedConcept: ''
   };
   
-  const qtypeDropdown = {
-    "SC4": "single correct 4 options",
-    "MC4": "multi correct 4 options",
-    "TF": "true or false",
-    "INT09": "Integer answer 0 to 9",
-    "INT9999": "Integer answer -9999 to 9999",
-    "Decimal": "decimal answer",
-    "Passage2": "2 Question passage",
-    "Passage3": "3 question passage",
-    "matrix passage": "2017 pattern 3 Question passage",
-    "matrix match": "each row +2-1 4 row matrix",
-    "subjective": "prove that or having expression as answer subjective question"
-  }
+  
   
     
   
@@ -50,7 +38,7 @@ const initialState = {
     }
   };
 
-  export default function Testcomp({ imageUrls, onJsonUpdate }) {
+  export default function Testcomp({ dropdownData, qtypeDropdown, imageUrls, onJsonUpdate }) {
     const [selectedQImageURL, setSelectedQImageURL] = useState(null);
     const [selectedSImageURL, setSelectedSImageURL] = useState(null);
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -146,6 +134,9 @@ const initialState = {
   };
   
 // <> {JSON.stringify(dropdownData)}</> 
+if (!dropdownData || !qtypeDropdown) {
+  return <div>Loading...</div>; // Or some other loading indicator
+}
 return (
     <>
     <p>
