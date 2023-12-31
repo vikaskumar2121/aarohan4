@@ -2,7 +2,7 @@
 import  { useState , useEffect} from 'react';
 import React, { useReducer } from 'react';
 import Image from 'next/image'
-import { dropdownData } from "@/app/components/dropdowndata"
+import { dropdownData } from './dropdowndata'; 
 
 const initialState = {
     selectedSubject: '',

@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 import ImageUpload from "../components/imagecomponent";
 import Testcomp from "../components/testcomponent";
 import FirestoreUpload from "../components/FirestoreUpload";
+import FetchDropdownData from "../components/FetchDropdownData";
 
 const page = () => {
   const { user } = UserAuth();
@@ -51,7 +52,7 @@ const handleJsonUpdate = (data) => {
         </p>
         <ImageUpload onUpdateState={handleImageURLUpdate} /> <br />
         <> {JSON.stringify(imageUrls)}</> <br />
-        <Testcomp imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /> <br />
+        <FetchDropdownData imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /> <br />
         <> {JSON.stringify(uploadableFirestoreData)}</> <br />
         <FirestoreUpload dataToUpload={uploadableFirestoreData} collectionName="yourCollectionName" />   <br />
         </>
