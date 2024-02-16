@@ -27,6 +27,7 @@ const handleJsonUpdate = (data) => {
   const updatedFirestoreData = {
     username: user.displayName,
     email: user.email,
+    ...uploadableFirestoreData,
     ...data
   };
   setuploadableFirestoreData(updatedFirestoreData);
@@ -54,7 +55,11 @@ const handleJsonUpdate = (data) => {
         <> {JSON.stringify(imageUrls)}</> <br />
         <FetchDropdownData imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /> <br />
         <> {JSON.stringify(uploadableFirestoreData)}</> <br />
-        <FirestoreUpload dataToUpload={uploadableFirestoreData} collectionName="yourCollectionName" />   <br />
+        <FirestoreUpload 
+      dataToUpload={uploadableFirestoreData} 
+      collectionName="yourCollectionName" 
+      onUploadComplete={handleJsonUpdate}
+    />      <br />
         </>
       ) : (
         <p>You must be logged in to view this page - protected route.</p>

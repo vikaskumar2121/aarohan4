@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import Testcomp from './testcomponent';
 
 const FetchDropdownData = ({ imageUrls, onJsonUpdate }) => {
-  const [data, setData] = useState({ dropdownData: null, qtypeDropdown: null });
+  const [data, setData] = useState({ dropdownData: null, qtypeDropdown: null,qsourcesDropdown:null ,qrelavanceDropdown:null});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,9 @@ const FetchDropdownData = ({ imageUrls, onJsonUpdate }) => {
             const parsedData = JSON.parse(jsonString);
             setData({
               dropdownData: parsedData.dropdownData,
-              qtypeDropdown: parsedData.qtypeDropdown
+              qtypeDropdown: parsedData.qtypeDropdown,
+              qsourcesDropdown: parsedData.qsources,
+              qrelavanceDropdown: parsedData.qrelavanceDropdown
             });
           }
         } else {
@@ -47,6 +49,8 @@ const FetchDropdownData = ({ imageUrls, onJsonUpdate }) => {
     <Testcomp 
       dropdownData={data.dropdownData}
       qtypeDropdown={data.qtypeDropdown}
+      qsourcesDropdown={data.qsourcesDropdown}
+      qrelavanceDropdown={data.qrelavanceDropdown}
       imageUrls={imageUrls}
       onJsonUpdate={onJsonUpdate}
     />
