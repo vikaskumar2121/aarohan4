@@ -13,7 +13,7 @@ const AddSourceComponent = () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const jsonString = docSnap.data().string1;
+          const jsonString = docSnap.data().string3;
           const parsedData = JSON.parse(jsonString);
           setData(parsedData);
         } else {
@@ -44,7 +44,7 @@ const AddSourceComponent = () => {
 
       // Update Firestore
       const docRef = doc(firestore, 'dropData', 'docid');
-      await updateDoc(docRef, { string1: updatedString });
+      await updateDoc(docRef, { string3: updatedString });
 
       alert("Source added!");
       setNewSource({ qsource: '', isActive: true }); // Reset the form

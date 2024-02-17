@@ -16,16 +16,22 @@ const FetchDropdownData = ({ imageUrls, onJsonUpdate }) => {
 
         if (docSnap.exists()) {
           // Assuming 'string1' is a JSON string
-          const jsonString = docSnap.data().string1;
+          const jsonString1 = docSnap.data().string1;
+          const jsonString2 = docSnap.data().string2;
+          const jsonString3 = docSnap.data().string3;
+          const jsonString4 = docSnap.data().string4;
 
           // Check if the JSON string is valid and parse it
-          if (jsonString) {
-            const parsedData = JSON.parse(jsonString);
+          if (jsonString1 && jsonString2 && jsonString3 && jsonString4) {
+            const parsedData1 = JSON.parse(jsonString1);
+            const parsedData2 = JSON.parse(jsonString2);
+            const parsedData3 = JSON.parse(jsonString3);
+            const parsedData4 = JSON.parse(jsonString4);
             setData({
-              dropdownData: parsedData.dropdownData,
-              qtypeDropdown: parsedData.qtypeDropdown,
-              qsourcesDropdown: parsedData.qsources,
-              qrelavanceDropdown: parsedData.qrelavanceDropdown
+              dropdownData: parsedData1.dropdownData,
+              qtypeDropdown: parsedData2.qtypeDropdown,
+              qsourcesDropdown: parsedData3.qsources,
+              qrelavanceDropdown: parsedData4.qrelavanceDropdown
             });
           }
         } else {

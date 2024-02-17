@@ -47,19 +47,16 @@ const handleJsonUpdate = (data) => {
         <Spinner />
       ) : user ? (
         <>
-        <p>
-          Welcome, {user.displayName} - you are logged in to the profile page -
-          a protected route.
-        </p>
-        <ImageUpload onUpdateState={handleImageURLUpdate} /> <br />
-        <> {JSON.stringify(imageUrls)}</> <br />
-        <FetchDropdownData imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /> <br />
-        <> {JSON.stringify(uploadableFirestoreData)}</> <br />
-        <FirestoreUpload 
-      dataToUpload={uploadableFirestoreData} 
-      collectionName="yourCollectionName" 
-      onUploadComplete={handleJsonUpdate}
-    />      <br />
+          <p>Welcome, {user.displayName} - you are logged in to the profile page - a protected route.</p>
+          <ImageUpload onUpdateState={handleImageURLUpdate} /><br />
+          <pre>{JSON.stringify(imageUrls, null, 2)}</pre><br />
+          <FetchDropdownData imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /><br />
+          <pre>{JSON.stringify(uploadableFirestoreData, null, 2)}</pre><br />
+          <FirestoreUpload 
+            dataToUpload={uploadableFirestoreData} 
+            collectionName="yourCollectionName" 
+            onUploadComplete={handleJsonUpdate}
+          /><br />
         </>
       ) : (
         <p>You must be logged in to view this page - protected route.</p>

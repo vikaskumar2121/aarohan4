@@ -13,7 +13,7 @@ const AddRelevanceComponent = () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const jsonString = docSnap.data().string1;
+          const jsonString = docSnap.data().string4;
           const parsedData = JSON.parse(jsonString);
           setData(parsedData);
         } else {
@@ -34,7 +34,7 @@ const AddRelevanceComponent = () => {
       const docSnap = await getDoc(docRef);
   
       if (docSnap.exists()) {
-        const currentData = docSnap.data().string1;
+        const currentData = docSnap.data().string4;
         const parsedData = JSON.parse(currentData);
   
         // Correct the property name to 'qrelavanceDropdown'
@@ -48,7 +48,7 @@ const AddRelevanceComponent = () => {
   
         // Update Firestore with the newly updated string1
         try {
-          await updateDoc(docRef, { string1: updatedString });
+          await updateDoc(docRef, { string4: updatedString });
   
           alert("Relevance added!");
           setNewRelevance(''); // Reset the input

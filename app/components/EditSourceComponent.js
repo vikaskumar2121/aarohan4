@@ -13,7 +13,7 @@ const EditSourceComponent = () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const jsonString = docSnap.data().string1;
+          const jsonString = docSnap.data().string3;
           const parsedData = JSON.parse(jsonString);
           setSources(parsedData.qsources || []);
         } else {
@@ -38,7 +38,7 @@ const EditSourceComponent = () => {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        const currentData = docSnap.data().string1;
+        const currentData = docSnap.data().string3;
         const parsedData = JSON.parse(currentData);
   
         // Toggle isActive status
@@ -57,7 +57,7 @@ const EditSourceComponent = () => {
   
         // Update Firestore
         try {
-          await updateDoc(docRef, { string1: updatedString });
+          await updateDoc(docRef, { string3: updatedString });
           setSources(updatedSources); // Update local state
           alert('Source active status updated!');
         } catch (error) {
