@@ -76,35 +76,39 @@ const AddConceptComponent = () => {
 
   return (
     <div>
-    <h2>Add a Concept to a Chapter</h2>
-    <select value={selectedSubject} onChange={handleSubjectChange}>
+    <h2 class="bg-blue-200 text-black py-2"> Add a Concept to a Chapter</h2>
+    <select className="select select-bordered select-sm w-full max-w-xs"
+       value={selectedSubject} onChange={handleSubjectChange}>
       <option value="">Select a Subject</option>
       {data.dropdownData?.subjects.map((subject) => (
         <option key={subject.name} value={subject.name}>{subject.name}</option>
       ))}
     </select>
 
-    <select value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
+    <select className="select select-bordered select-sm w-full max-w-xs" 
+      value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
       <option value="">Select a Chapter</option>
       {selectedSubject && data.dropdownData?.subjects.find(subj => subj.name === selectedSubject)?.chapters.map((chapter) => (
         <option key={chapter.name} value={chapter.name}>{chapter.name}</option>
       ))}
     </select>
 
-    <input
+    <input className="input input-bordered input-sm w-full max-w-xs"
       name="name"
       type="text"
       placeholder="Concept Name"
       value={newConcept.name}
       onChange={handleConceptChange}
     />
-    <textarea
+    <div>
+    <textarea className="textarea textarea-bordered h-24"
       name="description"
       placeholder="Concept Description"
       value={newConcept.description}
       onChange={handleConceptChange}
     />
-    <button onClick={handleAddConcept} disabled={!selectedSubject || !selectedChapter || !newConcept.name || !newConcept.description}>Add Concept</button>
+    </div>
+    <button class="btn" onClick={handleAddConcept} disabled={!selectedSubject || !selectedChapter || !newConcept.name || !newConcept.description}>Add Concept</button>
   </div>
   );
 };

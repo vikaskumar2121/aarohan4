@@ -51,11 +51,24 @@ const ImageUpload = ({ onUpdateState }) => {
     return (
         <>
             <p>Hi, please upload your question and solution images.</p>
-            <input type="file" onChange={(e) => handleImageSelection(e, 'question')} />
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text">Pick Question Image</span>
+                </div>
+            <input className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+             type="file" onChange={(e) => handleImageSelection(e, 'question')} />
+            </label>
             {questionImage && <Image src={questionImage} alt="Question" width={500} height={240} priority />}
-            <input type="file" onChange={(e) => handleImageSelection(e, 'solution')} />
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text">Pick Solution Image</span>
+                </div>
+            <input className="file-input file-input-bordered file-input-sm w-full max-w-xs" 
+            type="file" onChange={(e) => handleImageSelection(e, 'solution')} />
+            </label>
             {solutionImage && <Image src={solutionImage} alt="Solution" width={500} height={240} priority />}
-            <button onClick={handleImageUpload} disabled={isButtonDisabled}>Upload Images</button>
+            
+            <button class="btn" onClick={handleImageUpload} disabled={isButtonDisabled}>Upload Images</button>
 
         </>
     );

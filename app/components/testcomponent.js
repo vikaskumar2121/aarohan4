@@ -89,11 +89,20 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
+    if (id === 'Qtype') {
+      const selectedText = qtypeDropdown[value];
+      const firstLetter = selectedText ? selectedText[0] : ''; // Assuming 'value' is the key in your qtypeDropdown object
+      dispatch({
+        type: 'UPDATE_FORM',
+        payload: { field: 'Qmagnitude', value: firstLetter },
+      });
+    }
     dispatch({
       type: 'UPDATE_FORM',
       payload: { field: id, value },
     });
   };
+  
 
   const handleSubjectChange = (e) => {
     const selectedSubject = e.target.value;
@@ -154,13 +163,15 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
   return (
     <>
   <p>"test comp"</p>
-  <>{JSON.stringify({qrelavanceDropdown})}</>
+  
   <div>
   <div style={{ display: 'flex', alignItems: 'center' }}>
-  <label htmlFor="Qsource" style={{ flex: 1, marginRight: '10px' }}>
-    Question Source:
-  </label>
-  <select
+  <label className="form-control w-full max-w-xs" htmlFor="Qsource" style={{ flex: 1, marginRight: '10px' }}>
+  <div className="label">
+  <span className="label-text">Question Source:</span>
+    
+    </div>
+  <select className="select select-bordered"
     id="Qsource"
     style={{ flex: 2, marginLeft: '10px' }}
     value={state.formData.Qsource}
@@ -175,12 +186,15 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
         </option>
       ))}
   </select>
-</div>
-<div style={{ display: 'flex', alignItems: 'center' }}>
-  <label htmlFor="serialNumber" style={{ flex: 1, marginRight: '10px' }}>
-    Serial Number:
   </label>
-  <input
+
+  <label className="form-control w-full max-w-xs" htmlFor="serialNumber" style={{ flex: 1, marginRight: '10px' }}>
+  <div className="label">
+  <span className="label-text">Serial Number:</span>
+    
+    </div>
+  <input className="input input-bordered w-16"
+    
     type="number"
     id="serialNumber"
     style={{ flex: 2, marginLeft: '10px' }}
@@ -188,47 +202,63 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
     onChange={handleInputChange}
     min="0" // Ensure that only non-negative numbers can be entered
   />
+  </label>
 </div>
 
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Qtext" style={{ flex: 1, marginRight: '10px' }}>
-        Question Text:
-      </label>
-      <input
+      <label className="form-control w-full max-w-xs" htmlFor="Qtext" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+      <span className="label-text">Question Text:</span>
+        
+        </div>
+      <textarea className="textarea textarea-bordered h-24"
+        
         type="text"
         id="Qtext"
         style={{ flex: 2, marginLeft: '10px' }}
         value={state.formData.Qtext}
         onChange={handleInputChange}
-      />
+      > </textarea>
+      </label>
     </div>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Stext" style={{ flex: 1, marginRight: '10px' }}>
-        Solution Text:
-      </label>
-      <input
+      <label className="form-control w-full max-w-xs" htmlFor="Stext" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+      <span className="label-text">Solution Text:</span>
+        
+      </div>
+      <textarea className="textarea textarea-bordered h-24"
         type="text"
         id="Stext"
         style={{ flex: 2, marginLeft: '10px' }}
         value={state.formData.Stext}
         onChange={handleInputChange}
-      />
+        > </textarea>
+      </label>
     </div>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Atext" style={{ flex: 1, marginRight: '10px' }}>
-        Answer Text:
-      </label>
-      <input
+      <label className="form-control w-full max-w-xs" htmlFor="Atext" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+         <span className="label-text">Answer Text:</span>
+      </div>
+        
+      <input className="input input-bordered w-full max-w-xs"
         type="text"
         id="Atext"
         style={{ flex: 2, marginLeft: '10px' }}
         value={state.formData.Atext}
         onChange={handleInputChange}
       />
+      </label>
     </div>
     <div>
-      <label htmlFor="Qsubject">Subject:</label>
-      <select id="Qsubject" value={selectedSubject} onChange={handleSubjectChange}>
+      <label className="form-control w-full max-w-xs" htmlFor="Qsubject">
+      <div className="label">
+      <span className="label-text">Subject:</span>
+        
+      </div> 
+      <select className="select select-bordered"
+      id="Qsubject" value={selectedSubject} onChange={handleSubjectChange}>
         <option value="">Select a subject</option>
         {dropdownData.subjects.map((subj) => (
           <option key={subj.name} value={subj.name}>
@@ -236,10 +266,14 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
           </option>
         ))}
       </select>
+      </label>
     </div>
     <div>
-      <label htmlFor="Qchapter">Chapter:</label>
-      <select id="Qchapter" value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
+      <label className="form-control w-full max-w-xs" htmlFor="Qchapter">
+      <div className="label">
+        <span className="label-text"> Chapter:</span>
+      </div>
+      <select className="select select-bordered" id="Qchapter" value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
         <option value="">Select a chapter</option>
         {subject && subject.chapters.map((chap) => (
           <option key={chap.name} value={chap.name}>
@@ -247,35 +281,46 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
           </option>
         ))}
       </select>
+      </label>
     </div>
     <div>
-      <label htmlFor="Qconcept">Concept:</label>
-      <select id="Qconcept" value={selectedConcept} onChange={handleConceptChange} disabled={!selectedChapter}>
+      <label className="form-control w-full max-w-xs" htmlFor="Qconcept">
+      <div className="label">
+      <span className="label-text">Concept:</span>
+        
+      </div>
+      <select className="select select-bordered" id="Qconcept" value={selectedConcept} onChange={handleConceptChange} disabled={!selectedChapter}>
         <option value="">Select a concept</option>
         {chapter && chapter.concepts.map((concept) => (
           <option key={concept.name} value={concept.name}>
             {concept.name}
           </option>
         ))}
-      </select>
+      </select> 
+      </label>
     </div>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Qdifficulty" style={{ flex: 1, marginRight: '10px' }}>
-        Question Difficulty:
-      </label>
-      <input
+      <label className="form-control w-full max-w-xs" htmlFor="Qdifficulty" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+        <span className="label-text">Question Difficulty:</span>
+        </div>
+      
+      <input className="input input-bordered w-full max-w-xs"
         type="number"
         id="Qdifficulty"
         style={{ flex: 2, marginLeft: '10px' }}
         value={state.formData.Qdifficulty}
         onChange={handleInputChange}
       />
+      </label>
     </div>
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Qrelavance" style={{ flex: 1, marginRight: '10px' }}>
-        Question Relevance:
-      </label>
-      <select
+      <label className="form-control w-full max-w-xs" htmlFor="Qrelavance" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+        <span className="label-text">Question Relevance:</span>
+      </div>
+        
+      <select className="select select-bordered"
   id="Qrelavance"
   style={{ flex: 2, marginLeft: '10px' }}
   multiple={true}
@@ -294,12 +339,15 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
     </option>
   ))}
 </select>
+</label>
     </div>
+
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Qtype" style={{ flex: 1, marginRight: '10px' }}>
-        Question Type:
-      </label>
-      <select
+      <label className="form-control w-full max-w-xs" htmlFor="Qtype" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+        <span className="label-text"> Question Type: </span>
+      </div>
+      <select className="select select-bordered"
   id="Qtype"
   style={{ flex: 2, marginLeft: '10px' }}
   value={state.formData.Qtype}
@@ -312,20 +360,26 @@ export default function Testcomp({ dropdownData, qtypeDropdown,qsourcesDropdown,
     </option>
   ))}
 </select>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <label htmlFor="Qmagnitude" style={{ flex: 1, marginRight: '10px' }}>
-        Question Magnitude:
+</label>
+    
+      <label className="form-control w-full max-w-xs" htmlFor="Qmagnitude" style={{ flex: 1, marginRight: '10px' }}>
+      <div className="label">
+        <span className="label-text">Question Magnitude:</span>
+      </div>
+      
+      <input className="input input-bordered w-16"
+  type="text" // Change type to "text" since we might be displaying letters now
+  id="Qmagnitude"
+  style={{ flex: 2, marginLeft: '10px' }}
+  value={state.formData.Qmagnitude}
+  onChange={handleInputChange}
+  disabled={true} // Disable this input
+/>
+
       </label>
-      <input
-        type="number"
-        id="Qmagnitude"
-        style={{ flex: 2, marginLeft: '10px' }}
-        value={state.formData.Qmagnitude}
-        onChange={handleInputChange} min="1" max="5"
-      />
     </div>
-    <button 
+
+    <button className="btn"
       onClick={handleSubmit} 
       disabled={!isFormValid()}
     >

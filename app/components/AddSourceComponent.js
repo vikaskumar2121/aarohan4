@@ -53,22 +53,23 @@ const AddSourceComponent = () => {
 
   return (
     <div>
-      <h2>Add a Source</h2>
-      <input
+      <h2 class="bg-blue-200 text-black py-2">Add a Source</h2>
+      <input className="input input-bordered input-sm w-full max-w-xs"
         type="text"
         placeholder="Source Name"
         value={newSource.qsource}
         onChange={handleSourceChange}
       />
       <label>
-        <input
+        <input className="checkbox"
+          style={{ flex: 2, marginLeft: '10px' }}
           type="checkbox"
           checked={newSource.isActive}
           onChange={handleIsActiveChange}
         />
         Is Active?
       </label>
-      <button onClick={handleAddSource} disabled={!newSource.qsource.trim()}>Add Source</button>
+      <button class="btn" onClick={handleAddSource} disabled={!newSource.qsource.trim()}>Add Source</button>
     </div>
   );
 };

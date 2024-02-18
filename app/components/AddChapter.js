@@ -67,20 +67,23 @@ const AddChapterComponent = () => {
 
   return (
     <div>
-    <h2>Add a Chapter to a Subject</h2>
-    <select value={selectedSubject} onChange={handleSubjectChange}>
+    <h2 class="bg-blue-200 text-black py-2">Add a Chapter to a Subject</h2>
+
+    
+    <select className="select select-bordered select-sm" value={selectedSubject} onChange={handleSubjectChange}>
       <option value="">Select a Subject</option>
       {data.dropdownData?.subjects.map((subject) => (
         <option key={subject.name} value={subject.name}>{subject.name}</option>
       ))}
     </select>
-    <input 
+    
+    <input className="input input-bordered input-sm w-full max-w-xs"
       type="text" 
       placeholder="New Chapter Name" 
       value={newChapterName} 
       onChange={handleNewChapterNameChange}
     />
-    <button onClick={handleAddChapter} disabled={!selectedSubject || !newChapterName.trim()}>Add Chapter</button>
+    <button className="btn" onClick={handleAddChapter} disabled={!selectedSubject || !newChapterName.trim()}>Add Chapter</button>
   </div>
   );
 };

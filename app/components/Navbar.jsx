@@ -31,46 +31,52 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className="h-20 w-full border-b-2 flex items-center justify-between p-2">
+    <div className="navbar bg-base-100 h-20 w-full border-b-2 flex items-center justify-between p-2">
+      <a className="btn btn-ghost text-xl">Aarohan</a>
       <ul className="flex">
-        <li className="p-2 cursor-pointer">
-          <Link href="/">Home</Link>
+        <li className="p-2">
+          <Link href="/" className="btn btn-ghost">Home</Link>
         </li>
-        <li className="p-2 cursor-pointer">
-          <Link href="/about">About</Link>
+        <li className="p-2">
+          <Link href="/about" className="btn btn-ghost">About</Link>
         </li>
-
-        {!user ? null : (
-          <li className="p-2 cursor-pointer">
-            <Link href="/addQuestions">Add Questions</Link>
-          </li>
-        )}
-        {!user ? null : (
-          <li className="p-2 cursor-pointer">
-            <Link href="/editMetaData"> Edit options </Link>
-          </li>
+  
+        {user && (
+          <>
+            <li className="p-2">
+              <Link href="/addQuestions" className="btn btn-ghost">Add Questions</Link>
+            </li>
+            <li className="p-2">
+              <Link href="/editMetaData" className="btn btn-ghost">Edit Options</Link>
+            </li>
+          </>
         )}
       </ul>
-
-      {loading ? null : !user ? (
-        <ul className="flex">
-          <li onClick={handleSignIn} className="p-2 cursor-pointer">
-            Login
-          </li>
-          <li onClick={handleSignIn} className="p-2 cursor-pointer">
-            Sign up
-          </li>
-        </ul>
-      ) : (
-        <div>
-          <p>Welcome, {user.displayName}</p>
-          <p className="cursor-pointer" onClick={handleSignOut}>
-            Sign out
-          </p>
-        </div>
+  
+      {!loading && (
+        <>
+          {!user ? (
+            <ul className="flex">
+              <li onClick={handleSignIn} className="btn btn-ghost p-2 cursor-pointer">
+                Login
+              </li>
+              <li onClick={handleSignIn} className="btn btn-ghost p-2 cursor-pointer">
+                Sign up
+              </li>
+            </ul>
+          ) : (
+            <div>
+              <p>Welcome, {user.displayName}</p>
+              <button className="btn btn-ghost" onClick={handleSignOut}>
+                Sign out
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
+  
 };
 
 export default Navbar;

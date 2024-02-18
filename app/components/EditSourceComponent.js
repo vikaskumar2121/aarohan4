@@ -71,8 +71,9 @@ const EditSourceComponent = () => {
 
   return (
     <div>
-      <h2>Edit Source Active Status</h2>
-      <select value={selectedSourceIndex} onChange={handleSourceSelection}>
+      <h2 class="bg-blue-200 text-black py-2">Edit Source Active Status</h2>
+      <select className="select select-bordered select-sm"
+         value={selectedSourceIndex} onChange={handleSourceSelection}>
         <option value="">Select a Source</option>
         {sources.map((source, index) => (
           <option key={index} value={index}>
@@ -85,7 +86,7 @@ const EditSourceComponent = () => {
           <p>
             Current Status: {sources[selectedSourceIndex].isActive ? 'Active' : 'Inactive'}
           </p>
-          <button onClick={toggleIsActive}>
+          <button class="btn" onClick={toggleIsActive}>
             Toggle Active
           </button>
         </div>

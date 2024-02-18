@@ -60,7 +60,7 @@ const FirestoreUpload = ({ dataToUpload, collectionName , onUploadComplete }) =>
 
   return (
     <div>
-      <button onClick={uploadData} disabled={isButtonDisabled || isFormDataEmpty()}>Upload Data to Firestore</button>
+      <button className="btn" onClick={uploadData} disabled={isButtonDisabled || isFormDataEmpty()}>Upload Data to Firestore</button>
     </div>
   );
 };

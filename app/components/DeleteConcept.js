@@ -76,29 +76,32 @@ const DeleteConceptComponent = () => {
 
   return (
     <div>
-    <h2>Delete a Concept from a Chapter</h2>
-    <select value={selectedSubject} onChange={handleSubjectChange}>
+    <h2 class="bg-blue-200 text-black py-2">Delete a Concept from a Chapter</h2>
+    <select className="select select-bordered select-sm w-full max-w-xs"
+     value={selectedSubject} onChange={handleSubjectChange}>
       <option value="">Select a Subject</option>
       {data.dropdownData?.subjects.map((subject) => (
         <option key={subject.name} value={subject.name}>{subject.name}</option>
       ))}
     </select>
 
-    <select value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
+    <select className="select select-bordered select-sm w-full max-w-xs"
+     value={selectedChapter} onChange={handleChapterChange} disabled={!selectedSubject}>
       <option value="">Select a Chapter</option>
       {selectedSubject && data.dropdownData?.subjects.find(subj => subj.name === selectedSubject)?.chapters.map((chapter) => (
         <option key={chapter.name} value={chapter.name}>{chapter.name}</option>
       ))}
     </select>
 
-    <select value={selectedConcept} onChange={handleConceptChange} disabled={!selectedChapter}>
+    <select className="select select-bordered select-sm w-full max-w-xs"
+     value={selectedConcept} onChange={handleConceptChange} disabled={!selectedChapter}>
       <option value="">Select a Concept</option>
       {selectedChapter && data.dropdownData?.subjects.find(subj => subj.name === selectedSubject)?.chapters.find(chap => chap.name === selectedChapter)?.concepts.map((concept) => (
         <option key={concept.name} value={concept.name}>{concept.name}</option>
       ))}
     </select>
 
-    <button onClick={handleDeleteConcept} disabled={!selectedSubject || !selectedChapter || !selectedConcept}>Delete Concept</button>
+    <button class="btn" onClick={handleDeleteConcept} disabled={!selectedSubject || !selectedChapter || !selectedConcept}>Delete Concept</button>
   </div>
   );
 };
