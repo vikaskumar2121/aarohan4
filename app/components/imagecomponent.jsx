@@ -68,7 +68,7 @@ const ImageUpload = ({ onUpdateState }) => {
             </label>
             {solutionImage && <Image src={solutionImage} alt="Solution" width={500} height={240} priority />}
             
-            <button class="btn" onClick={handleImageUpload} disabled={isButtonDisabled}>Upload Images</button>
+            <button className="btn" onClick={handleImageUpload} disabled={isButtonDisabled}>Upload Images</button>
 
         </>
     );

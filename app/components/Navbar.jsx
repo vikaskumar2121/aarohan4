@@ -38,7 +38,7 @@ const Navbar = () => {
           <Link href="/" className="btn btn-ghost">Home</Link>
         </li>
         <li className="p-2">
-          <Link href="/about" className="btn btn-ghost">About</Link>
+          <Link href="/viewQuestions" className="btn btn-ghost">View Questions</Link>
         </li>
   
         {user && (

@@ -1,6 +1,9 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import neo4j from 'neo4j-driver';
 
 const AddConceptComponent = () => {
   const [data, setData] = useState({ dropdownData: null });
@@ -43,7 +46,7 @@ const AddConceptComponent = () => {
   };
 
   const handleAddConcept = async () => {
-    if (selectedSubject && selectedChapter && newConcept.name) {
+    if (selectedSubject && selectedChapter && newConcept.name && newConcept.description) {
       const updatedSubjects = data.dropdownData.subjects.map((subject) => {
         if (subject.name === selectedSubject) {
           return {
@@ -62,22 +65,54 @@ const AddConceptComponent = () => {
         return subject;
       });
 
-      // Prepare the updated JSON string
       const updatedString = JSON.stringify({ dropdownData: { ...data.dropdownData, subjects: updatedSubjects }, qtypeDropdown: data.qtypeDropdown });
 
       // Update Firestore
       const docRef = doc(firestore, 'dropData', 'docid');
       await updateDoc(docRef, { string1: updatedString });
 
+      // Add the concept to Neo4j
+      await addConceptToNeo4j(selectedSubject, selectedChapter, newConcept);
+
       alert("Concept added!");
       setNewConcept({ name: '', description: '' });
     }
   };
 
+  const addConceptToNeo4j = async (subjectName, chapterName, concept) => {
+    const URI = 'neo4j+s://a2952975.databases.neo4j.io';
+    const USER = 'neo4j';
+    const PASSWORD = 'kL8LezCMVVAP7ZdTpgCbivC3t1HdWD2t3NQ2raMfdb4';
+    let driver;
+
+    try {
+      driver = neo4j.driver(URI, neo4j.auth.basic(USER, PASSWORD));
+      const session = driver.session();
+
+      const query = `
+        MATCH (s:Subject {name: $subjectName})-[:HAS_CHAPTER]->(c:Chapter {name: $chapterName})
+        CREATE (n:Concept {name: $conceptName, description: $conceptDescription})
+        CREATE (c)-[:HAS_CONCEPT]->(n)
+      `;
+
+      await session.run(query, { 
+        subjectName, 
+        chapterName, 
+        conceptName: concept.name, 
+        conceptDescription: concept.description 
+      });
+      console.log("Concept added to Neo4j successfully.");
+    } catch (error) {
+      console.error("Failed to add concept to Neo4j:", error);
+    } finally {
+      await driver.close();
+    }
+  };
+
   return (
     <div>
-    <h2 class="bg-blue-200 text-black py-2"> Add a Concept to a Chapter</h2>
-    <select className="select select-bordered select-sm w-full max-w-xs"
+      <h2 className="bg-blue-200 text-black py-2">Add a Concept to a Chapter</h2>
+      <select className="select select-bordered select-sm w-full max-w-xs"
        value={selectedSubject} onChange={handleSubjectChange}>
       <option value="">Select a Subject</option>
       {data.dropdownData?.subjects.map((subject) => (
@@ -108,8 +143,9 @@ const AddConceptComponent = () => {
       onChange={handleConceptChange}
     />
     </div>
-    <button class="btn" onClick={handleAddConcept} disabled={!selectedSubject || !selectedChapter || !newConcept.name || !newConcept.description}>Add Concept</button>
-  </div>
+    <button className="btn" onClick={handleAddConcept} disabled={!selectedSubject || !selectedChapter || !newConcept.name || !newConcept.description}>Add Concept</button>
+  
+    </div>
   );
 };
 

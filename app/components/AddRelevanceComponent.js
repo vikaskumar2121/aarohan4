@@ -67,14 +67,14 @@ const AddRelevanceComponent = () => {
 
   return (
     <div>
-      <h2 class="bg-blue-200 text-black py-2">Add a Relevance</h2>
+      <h2 className="bg-blue-200 text-black py-2">Add a Relevance</h2>
       <input className="input input-bordered input-sm w-full max-w-xs"
         type="text"
         placeholder="Relevance Type"
         value={newRelevance}
         onChange={(e) => setNewRelevance(e.target.value)}
       />
-      <button class="btn" onClick={handleAddRelevance} disabled={!newRelevance.trim()}>Add Relevance</button>
+      <button className="btn" onClick={handleAddRelevance} disabled={!newRelevance.trim()}>Add Relevance</button>
     </div>
   );
 };

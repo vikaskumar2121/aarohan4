@@ -47,7 +47,7 @@ const handleJsonUpdate = (data) => {
         <Spinner />
       ) : user ? (
         <>
-          <p>Welcome, {user.displayName} - you are logged in to the profile page - a protected route.</p>
+          <p>Welcome, {user.displayName} - you are logged in to the addQuestions - a protected route.</p>
           <ImageUpload onUpdateState={handleImageURLUpdate} /><br />
           <pre>{JSON.stringify(imageUrls, null, 2)}</pre><br />
           <FetchDropdownData imageUrls={imageUrls} onJsonUpdate={handleJsonUpdate} /><br />
