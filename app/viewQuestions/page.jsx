@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import FirestoreDisplay from '../components/FirestoreDisplay'
-import Neo4jGraph from '../neo4jComponents/Neo4jGraph'
+//import Neo4jGraph from '../neo4jComponents/Neo4jGraph'
 //import AddNodesClient from '../neo4jComponents/AddNodesClient'
 
 
