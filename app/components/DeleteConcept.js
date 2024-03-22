@@ -77,6 +77,7 @@ const DeleteConceptComponent = () => {
 
       alert("Concept deleted!");
       setSelectedConcept('');
+      window.location.reload();
     }
   };
 

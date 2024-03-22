@@ -39,30 +39,40 @@ const AddChapterComponent = () => {
 
   const handleAddChapter = async () => {
     if (selectedSubject && newChapterName) {
-      const updatedSubjects = data.dropdownData.subjects.map((subject) => {
-        if (subject.name === selectedSubject) {
-          return { 
-            ...subject, 
-            chapters: [...subject.chapters, { name: newChapterName, concepts: [] }]
-          };
+        const updatedSubjects = data.dropdownData.subjects.map((subject) => {
+            if (subject.name === selectedSubject) {
+                return { 
+                    ...subject, 
+                    chapters: [...subject.chapters, { name: newChapterName, concepts: [] }]
+                };
+            }
+            return subject;
+        });
+
+        const updatedDropdownData = { ...data.dropdownData, subjects: updatedSubjects };
+        const updatedString = JSON.stringify({ dropdownData: updatedDropdownData, qtypeDropdown: data.qtypeDropdown });
+
+        try {
+            // Update Firestore
+            const docRef = doc(firestore, 'dropData', 'docid');
+            await updateDoc(docRef, { string1: updatedString });
+
+            // Now, add the chapter to Neo4j
+            await addChapterToNeo4j(selectedSubject, newChapterName);
+
+            alert("Chapter added!");
+
+            // Refresh the page after operations are completed
+            window.location.reload();
+        } catch (error) {
+            console.error("Operation failed:", error);
+            alert("Failed to add chapter. Please try again.");
+        } finally {
+            setNewChapterName('');
         }
-        return subject;
-      });
-
-      const updatedDropdownData = { ...data.dropdownData, subjects: updatedSubjects };
-      const updatedString = JSON.stringify({ dropdownData: updatedDropdownData, qtypeDropdown: data.qtypeDropdown });
-
-      // Update Firestore
-      const docRef = doc(firestore, 'dropData', 'docid');
-      await updateDoc(docRef, { string1: updatedString });
-
-      // Now, add the chapter to Neo4j
-      await addChapterToNeo4j(selectedSubject, newChapterName);
-
-      alert("Chapter added!");
-      setNewChapterName('');
     }
-  };
+};
+
 
   const addChapterToNeo4j = async (subjectName, chapterName) => {
     const URI = 'neo4j+s://a2952975.databases.neo4j.io';

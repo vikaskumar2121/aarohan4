@@ -56,6 +56,9 @@ const AddRelevanceComponent = () => {
           setData({ ...parsedData, qrelavanceDropdown: updatedRelevance }); // Correct the property name here
         } catch (error) {
           console.error('Error adding new relevance:', error);
+        }finally {
+          // Refresh the page to reflect changes
+          window.location.reload();
         }
       } else {
         console.log('No such document!');

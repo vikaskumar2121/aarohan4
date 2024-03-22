@@ -47,37 +47,46 @@ const AddConceptComponent = () => {
 
   const handleAddConcept = async () => {
     if (selectedSubject && selectedChapter && newConcept.name && newConcept.description) {
-      const updatedSubjects = data.dropdownData.subjects.map((subject) => {
-        if (subject.name === selectedSubject) {
-          return {
-            ...subject,
-            chapters: subject.chapters.map((chapter) => {
-              if (chapter.name === selectedChapter) {
-                return {
-                  ...chapter,
-                  concepts: [...chapter.concepts, newConcept]
-                };
-              }
-              return chapter;
-            })
-          };
-        }
-        return subject;
-      });
-
-      const updatedString = JSON.stringify({ dropdownData: { ...data.dropdownData, subjects: updatedSubjects }, qtypeDropdown: data.qtypeDropdown });
-
-      // Update Firestore
-      const docRef = doc(firestore, 'dropData', 'docid');
-      await updateDoc(docRef, { string1: updatedString });
-
-      // Add the concept to Neo4j
-      await addConceptToNeo4j(selectedSubject, selectedChapter, newConcept);
-
-      alert("Concept added!");
-      setNewConcept({ name: '', description: '' });
+      try {
+        const updatedSubjects = data.dropdownData.subjects.map((subject) => {
+          if (subject.name === selectedSubject) {
+            return {
+              ...subject,
+              chapters: subject.chapters.map((chapter) => {
+                if (chapter.name === selectedChapter) {
+                  return {
+                    ...chapter,
+                    concepts: [...chapter.concepts, newConcept]
+                  };
+                }
+                return chapter;
+              })
+            };
+          }
+          return subject;
+        });
+  
+        const updatedString = JSON.stringify({ dropdownData: { ...data.dropdownData, subjects: updatedSubjects }, qtypeDropdown: data.qtypeDropdown });
+  
+        // Update Firestore
+        const docRef = doc(firestore, 'dropData', 'docid');
+        await updateDoc(docRef, { string1: updatedString });
+  
+        // Add the concept to Neo4j
+        await addConceptToNeo4j(selectedSubject, selectedChapter, newConcept);
+  
+        alert("Concept added!");
+      } catch (error) {
+        console.error("Error adding concept:", error);
+        alert("Failed to add concept!");
+      } finally {
+        setNewConcept({ name: '', description: '' }); // Reset the form fields
+        // Refresh the page to reflect changes
+        window.location.reload();
+      }
     }
   };
+  
 
   const addConceptToNeo4j = async (subjectName, chapterName, concept) => {
     const URI = 'neo4j+s://a2952975.databases.neo4j.io';

@@ -10,6 +10,8 @@ import AddSourceComponent from "../components/AddSourceComponent";
 import EditSourceComponent from "../components/EditSourceComponent";
 import AddRelevanceComponent from "../components/AddRelevanceComponent";
 import DisplayDataComponent from "../components/DisplayDataComponent";
+import EditConceptComponent from "../components/EditConcept";
+import DeleteSourceComponent from "../components/DeleteSource";
 const EditMetaData = () => {
     const { user } = UserAuth();
     const [loading, setLoading] = useState(true);
@@ -38,10 +40,12 @@ const EditMetaData = () => {
           <AddConceptComponent/>  <br />
           <DeleteChapterComponent />   <br />
           <DeleteConceptComponent />   <br /> <br />
-          <AddSourceComponent /><br />
-          <EditSourceComponent /> <br />
-          <AddRelevanceComponent /> <br />
-          <DisplayDataComponent />
+          <EditConceptComponent/>  <br />
+          <AddSourceComponent />  <br />
+          <EditSourceComponent />  <br />
+          <DeleteSourceComponent />  <br />
+          <AddRelevanceComponent />  <br />
+          <DisplayDataComponent />  <br />
 
           </>
         ) : (

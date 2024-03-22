@@ -40,28 +40,40 @@ const DeleteChapterComponent = () => {
 
   const handleDeleteChapter = async () => {
     if (selectedSubject && selectedChapter) {
-      const updatedSubjects = data.dropdownData.subjects.map((subject) => {
-        if (subject.name === selectedSubject) {
-          return {
-            ...subject,
-            chapters: subject.chapters.filter((chapter) => chapter.name !== selectedChapter)
-          };
-        }
-        return subject;
-      });
-
-      const updatedString = JSON.stringify({ dropdownData: { ...data.dropdownData, subjects: updatedSubjects }, qtypeDropdown: data.qtypeDropdown });
-
-      const docRef = doc(firestore, 'dropData', 'docid');
-      await updateDoc(docRef, { string1: updatedString });
-
-      // Delete the chapter from Neo4j
-      await deleteChapterFromNeo4j(selectedSubject, selectedChapter);
-
-      alert("Chapter deleted!");
-      setSelectedChapter('');
+      try {
+        const updatedSubjects = data.dropdownData.subjects.map((subject) => {
+          if (subject.name === selectedSubject) {
+            return {
+              ...subject,
+              chapters: subject.chapters.filter((chapter) => chapter.name !== selectedChapter)
+            };
+          }
+          return subject;
+        });
+  
+        const updatedString = JSON.stringify({ dropdownData: { ...data.dropdownData, subjects: updatedSubjects }, qtypeDropdown: data.qtypeDropdown });
+  
+        // Update Firestore
+        const docRef = doc(firestore, 'dropData', 'docid');
+        await updateDoc(docRef, { string1: updatedString });
+  
+        // Delete the chapter from Neo4j
+        await deleteChapterFromNeo4j(selectedSubject, selectedChapter);
+  
+        alert("Chapter deleted!");
+        setSelectedChapter('');
+      } catch (error) {
+        console.error('Error deleting chapter:', error);
+        alert('Failed to delete chapter. Please try again.');
+      } finally {
+        // Page will reload after the operation completes, regardless of success or failure
+        window.location.reload();
+      }
+    } else {
+      alert('Please select a subject and chapter to delete.');
     }
   };
+  
 
   const deleteChapterFromNeo4j = async (subjectName, chapterName) => {
     const URI = 'neo4j+s://a2952975.databases.neo4j.io';

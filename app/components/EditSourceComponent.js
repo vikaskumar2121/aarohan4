@@ -53,6 +53,7 @@ const EditSourceComponent = () => {
 
       setSources(updatedSources); // Update local state
       alert('Source active status updated!');
+      window.location.reload();
     }
   };
 

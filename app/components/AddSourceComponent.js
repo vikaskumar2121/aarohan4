@@ -39,20 +39,31 @@ const AddSourceComponent = () => {
 
   const handleAddSource = async () => {
     if (newSource.qsource.trim()) {
-      const updatedSources = [...data.qsources, newSource];
-      const updatedString = JSON.stringify({ ...data, qsources: updatedSources });
-
-      // Update Firestore
-      const docRef = doc(firestore, 'dropData', 'docid');
-      await updateDoc(docRef, { string3: updatedString });
-
-      // Add the source to Neo4j
-      await addSourceToNeo4j(newSource.qsource, newSource.isActive);
-
-      alert("Source added!");
-      setNewSource({ qsource: '', isActive: true }); // Reset the form
+      try {
+        const updatedSources = [...data.qsources, newSource];
+        const updatedString = JSON.stringify({ ...data, qsources: updatedSources });
+  
+        // Update Firestore
+        const docRef = doc(firestore, 'dropData', 'docid');
+        await updateDoc(docRef, { string3: updatedString });
+  
+        // Add the source to Neo4j
+        await addSourceToNeo4j(newSource.qsource, newSource.isActive);
+  
+        alert("Source added!");
+        setNewSource({ qsource: '', isActive: true }); // Reset the form
+      } catch (error) {
+        console.error('Error adding source:', error);
+        alert('Failed to add source. Please try again.');
+      } finally {
+        // Page will reload after the operation completes, regardless of success or failure
+        window.location.reload();
+      }
+    } else {
+      alert('Please enter a source name.');
     }
   };
+  
 
   const addSourceToNeo4j = async (sourceName, isActive) => {
     const URI = 'neo4j+s://a2952975.databases.neo4j.io';
